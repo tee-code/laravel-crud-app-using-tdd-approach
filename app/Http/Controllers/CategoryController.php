@@ -6,11 +6,14 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\CategoryRepository;
 
 class CategoryController extends Controller
 {
 
-    public function __construct(){
+    public function __construct(CategoryRepository $categoryRepository){
+
+        $this->categoryRepository = $categoryRepository;
 
         $this->middleware('auth')->except(['show', 'index']);
     }
@@ -23,7 +26,7 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $categories = Category::all();
+        $categories = $this->categoryRepository->getAll();
 
         return view('categories.index', compact('categories'));
 
@@ -47,11 +50,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-
-        Category::create([
-            "name" => $request->name,
-            "description" => $request->description
-        ]);
+        $this->categoryRepository->create($request->all());
 
         return redirect("/categories")->with("message", "Category added successfully.");
 
@@ -78,7 +77,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view("category.edit", compact("category"));
+        return view("categories.edit", compact("category"));
     }
 
     /**
@@ -91,7 +90,7 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, Category $category)
     {
 
-        $category->update($request->all());
+        $this->categoryRepository->update($category->id, $request->all());
 
         return redirect("/categories/$category->id/edit")->with("message", "Category updated successfully.");
 
@@ -105,7 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->categoryRepository->delete($category->id);
 
         return redirect("/categories")->with("message", "Category deleted successfully.");
 

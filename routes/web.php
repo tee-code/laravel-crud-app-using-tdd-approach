@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get("/categories", [CategoryController::class, 'index']);
 
+Route::get("/categories/create", [CategoryController::class, 'create']);
+
 Route::get("/categories/{category}", [CategoryController::class, 'show']);
 
 Route::get("/categories/{category}/edit", [CategoryController::class, 'edit'])->name("categories.edit");
