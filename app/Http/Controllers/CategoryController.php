@@ -50,7 +50,8 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-        $this->categoryRepository->create($request->all());
+
+        $this->categoryRepository->create($request->validated());
 
         return redirect("/categories")->with("message", "Category added successfully.");
 
@@ -90,7 +91,7 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, Category $category)
     {
 
-        $this->categoryRepository->update($category->id, $request->all());
+        $this->categoryRepository->update($category->id, $request->validated());
 
         return redirect("/categories/$category->id/edit")->with("message", "Category updated successfully.");
 
@@ -104,6 +105,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
         $this->categoryRepository->delete($category->id);
 
         return redirect("/categories")->with("message", "Category deleted successfully.");

@@ -12,7 +12,7 @@ class CategoryRepository implements \App\Interfaces\CategoryRepositoryInterface
     public function getAll()
     {
         // TODO: Implement getAll() method.
-        return Category::all();
+        return Category::paginate(5);
     }
 
     public function getById($id)
