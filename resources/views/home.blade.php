@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                        <div class="btn-group">
+                            <a href="{{ route("categories.index") }}" class="btn btn-primary active" aria-current="page">Categories</a>
+                            <a href="{{ route("posts.index") }}" class="btn btn-danger">Posts</a>
+                        </div>
                 </div>
             </div>
         </div>
