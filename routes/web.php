@@ -33,7 +33,7 @@ Route::put("/categories/{category}", [CategoryController::class, 'update'])->nam
 
 Route::delete("/categories/{category}", [CategoryController::class, "destroy"])->name("categories.delete");
 
-Route::get("/posts/{slug}", [PostController::class, "findBySlug"])->name("posts.slug");
+Route::get("/category/posts/{slug}", [PostController::class, "findBySlug"])->name("posts.slug");
 
 Route::resource("posts", PostController::class);
 

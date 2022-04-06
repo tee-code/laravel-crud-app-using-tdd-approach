@@ -78,7 +78,11 @@ class PostController extends Controller
     {
         $post = $this->postRepository->getPostBySlug($slug);
 
-        return view("posts.show", compact("post"));
+        if($post){
+            return view("posts.show", compact("post"));
+        }else {
+            return redirect("/posts")->with("message", "Post not found.");
+        }
 
     }
 
